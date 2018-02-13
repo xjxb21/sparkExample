@@ -35,15 +35,12 @@ public class Example3 {
         // Encoders are created for Java beans
         Encoder<WeatherFutureBean> encoder = Encoders.bean(WeatherFutureBean.class);
         Dataset<WeatherFutureBean> dataset = spark.createDataset(getWeatherData(), encoder);
-        dataset.show();
+//        dataset.show();
 
 
-        try {
-            dataset.createTempView("mytable");
-            dataset.select("select ");
-        } catch (AnalysisException e) {
-            e.printStackTrace();
-        }
+        dataset.createOrReplaceTempView("mytable");
+        Dataset<Row> r1 = spark.sql("select * from mytable where high>11");
+        r1.show();
 
         spark.close();
     }
