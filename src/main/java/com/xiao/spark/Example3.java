@@ -37,7 +37,6 @@ public class Example3 {
         Dataset<WeatherFutureBean> dataset = spark.createDataset(getWeatherData(), encoder);
 //        dataset.show();
 
-
         dataset.createOrReplaceTempView("mytable");
         Dataset<Row> r1 = spark.sql("select * from mytable where high>11");
         r1.show();
